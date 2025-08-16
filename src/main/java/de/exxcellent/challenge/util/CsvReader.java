@@ -13,7 +13,7 @@ public class CsvReader {
      *
      * @param path of file to be read
      * @return list of file content
-     * @throws IOException
+     * @throws IOException on error
      */
     public static List<String[]> readCSV(String path) throws IOException {
         List<String[]> rows = new ArrayList<>();

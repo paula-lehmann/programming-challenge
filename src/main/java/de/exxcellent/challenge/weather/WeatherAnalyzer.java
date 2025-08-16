@@ -25,7 +25,7 @@ public class WeatherAnalyzer {
                     .map(weather -> String.valueOf(weather.day()))
                     .orElse("N/A");
         } catch (IOException | IllegalArgumentException e) {
-            System.out.printf("error while reading csv file: %s", e.getMessage());
+            System.out.printf("error while reading csv file: %s%n", e.getMessage());
             return "N/A";
         }
     }

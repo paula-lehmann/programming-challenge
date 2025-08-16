@@ -40,7 +40,7 @@ public class WeatherAnalyzer {
         List<Weather> data = new ArrayList<>();
         for (Map<String, String> row : rows) {
             if (!row.containsKey("Day") || !row.containsKey("MxT") || !row.containsKey("MnT")) {
-                throw new IllegalArgumentException("CSV row is missing required keys: " + row.keySet());
+                throw new IllegalArgumentException("data is missing required keys: " + row.keySet());
             }
             data.add(new Weather(Integer.parseInt(row.get("Day")), Integer.parseInt(row.get("MxT")), Integer.parseInt(row.get("MnT"))));
         }

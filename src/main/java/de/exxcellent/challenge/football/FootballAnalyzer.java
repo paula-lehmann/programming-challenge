@@ -41,7 +41,7 @@ public class FootballAnalyzer {
         List<Football> data = new ArrayList<>();
         for (Map<String, String> row : rows) {
             if (!row.containsKey("Team") || !row.containsKey("Goals") || !row.containsKey("Goals Allowed")) {
-                throw new IllegalArgumentException("CSV row is missing required keys: " + row.keySet());
+                throw new IllegalArgumentException("data is missing required keys: " + row.keySet());
             }
             data.add(new Football(row.get("Team"), Integer.parseInt(row.get("Goals")), Integer.parseInt(row.get("Goals Allowed"))));
         }

@@ -43,7 +43,11 @@ public class FootballAnalyzer {
             if (!row.containsKey("Team") || !row.containsKey("Goals") || !row.containsKey("Goals Allowed")) {
                 throw new IllegalArgumentException("data is missing required keys: " + row.keySet());
             }
-            data.add(new Football(row.get("Team"), Integer.parseInt(row.get("Goals")), Integer.parseInt(row.get("Goals Allowed"))));
+            try {
+                data.add(new Football(row.get("Team"), Integer.parseInt(row.get("Goals")), Integer.parseInt(row.get("Goals Allowed"))));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid number format, " + e);
+            }
         }
         return data;
     }

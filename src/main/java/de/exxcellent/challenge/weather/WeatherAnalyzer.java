@@ -1,4 +1,5 @@
 package de.exxcellent.challenge.weather;
+
 import de.exxcellent.challenge.util.CsvReader;
 
 import java.io.IOException;

@@ -76,4 +76,15 @@ public class WeatherAnalyzerTest {
         String smallestSpread = WeatherAnalyzer.findDayWithSmallestSpread(wrongPath);
         Assertions.assertEquals("N/A", smallestSpread);
     }
+
+    @Test
+    void testFindDayWithSmallestSpread_invalidFileDataFormat() throws IOException {
+        File csvFile = tempDir.resolve("test.csv").toFile();
+        try (FileWriter writer = new FileWriter(csvFile)) {
+            writer.write("Day,MxT,MnT\n");
+            writer.write("1,abc,10\n");
+        }
+        String result = WeatherAnalyzer.findDayWithSmallestSpread(csvFile.getAbsolutePath());
+        Assertions.assertEquals("N/A", result);
+    }
 }

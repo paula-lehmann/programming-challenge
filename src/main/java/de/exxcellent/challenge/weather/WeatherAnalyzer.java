@@ -42,7 +42,11 @@ public class WeatherAnalyzer {
             if (!row.containsKey("Day") || !row.containsKey("MxT") || !row.containsKey("MnT")) {
                 throw new IllegalArgumentException("data is missing required keys: " + row.keySet());
             }
-            data.add(new Weather(Integer.parseInt(row.get("Day")), Integer.parseInt(row.get("MxT")), Integer.parseInt(row.get("MnT"))));
+            try {
+                data.add(new Weather(Integer.parseInt(row.get("Day")), Integer.parseInt(row.get("MxT")), Integer.parseInt(row.get("MnT"))));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid number format, " + e);
+            }
         }
         return data;
     }

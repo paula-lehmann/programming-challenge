@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class FootballAnalyzer {
 
@@ -17,7 +18,7 @@ public class FootballAnalyzer {
      */
     public static String findTeamWithSmallestDistance(String filePath) {
         try {
-            List<String[]> csvRows = CsvReader.readCSV(filePath);
+            List<Map<String, String>> csvRows = CsvReader.readCSV(filePath);
             List<Football> footballData = parseFootballData(csvRows);
 
             return footballData.stream()
@@ -36,10 +37,10 @@ public class FootballAnalyzer {
      * @param rows List of String containing info of football data
      * @return List of football data with team name, goals scored and goals received
      */
-    private static List<Football> parseFootballData(List<String[]> rows) {
+    private static List<Football> parseFootballData(List<Map<String, String>> rows) {
         List<Football> data = new ArrayList<>();
-        for (String[] row : rows) {
-            data.add(new Football(row[0], Integer.parseInt(row[5]), Integer.parseInt(row[6])));
+        for (Map<String, String> row : rows) {
+            data.add(new Football(row.get("Team"), Integer.parseInt(row.get("Goals")), Integer.parseInt(row.get("Goals Allowed"))));
         }
         return data;
     }

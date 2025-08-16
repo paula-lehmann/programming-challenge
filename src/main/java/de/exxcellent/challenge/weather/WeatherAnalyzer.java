@@ -1,11 +1,11 @@
 package de.exxcellent.challenge.weather;
-
 import de.exxcellent.challenge.util.CsvReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class WeatherAnalyzer {
 
@@ -17,7 +17,7 @@ public class WeatherAnalyzer {
      */
     public static String findDayWithSmallestSpread(String filePath) {
         try {
-            List<String[]> csvRows = CsvReader.readCSV(filePath);
+            List<Map<String, String>> csvRows = CsvReader.readCSV(filePath);
             List<Weather> weatherData = parseWeatherData(csvRows);
 
             return weatherData.stream()
@@ -36,10 +36,10 @@ public class WeatherAnalyzer {
      * @param rows List of String containing info of weather data
      * @return List of weather data with day, min and max temp
      */
-    private static List<Weather> parseWeatherData(List<String[]> rows) {
+    private static List<Weather> parseWeatherData(List<Map<String, String>> rows) {
         List<Weather> data = new ArrayList<>();
-        for (String[] row : rows) {
-            data.add(new Weather(Integer.parseInt(row[0]), Integer.parseInt(row[1]), Integer.parseInt(row[2])));
+        for (Map<String, String> row : rows) {
+            data.add(new Weather(Integer.parseInt(row.get("Day")), Integer.parseInt(row.get("MxT")), Integer.parseInt(row.get("MnT"))));
         }
         return data;
     }

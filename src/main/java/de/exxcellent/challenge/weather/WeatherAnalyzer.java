@@ -24,7 +24,7 @@ public class WeatherAnalyzer {
                     .min(Comparator.comparingInt(Weather::getTempSpread))
                     .map(weather -> String.valueOf(weather.day()))
                     .orElse("N/A");
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             System.out.printf("error while reading csv file: %s", e.getMessage());
             return "N/A";
         }
@@ -36,9 +36,12 @@ public class WeatherAnalyzer {
      * @param rows List of String containing info of weather data
      * @return List of weather data with day, min and max temp
      */
-    private static List<Weather> parseWeatherData(List<Map<String, String>> rows) {
+    private static List<Weather> parseWeatherData(List<Map<String, String>> rows) throws IllegalArgumentException {
         List<Weather> data = new ArrayList<>();
         for (Map<String, String> row : rows) {
+            if (!row.containsKey("Day") || !row.containsKey("MxT") || !row.containsKey("MnT")) {
+                throw new IllegalArgumentException("CSV row is missing required keys: " + row.keySet());
+            }
             data.add(new Weather(Integer.parseInt(row.get("Day")), Integer.parseInt(row.get("MxT")), Integer.parseInt(row.get("MnT"))));
         }
         return data;

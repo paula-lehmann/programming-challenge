@@ -25,7 +25,7 @@ public class FootballAnalyzer {
                     .min(Comparator.comparingInt(Football::getGoalDistance))
                     .map(team -> String.valueOf(team.teamName()))
                     .orElse("N/A");
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             System.out.printf("error while reading csv file: %s", e.getMessage());
             return "N/A";
         }
@@ -37,9 +37,12 @@ public class FootballAnalyzer {
      * @param rows List of String containing info of football data
      * @return List of football data with team name, goals scored and goals received
      */
-    private static List<Football> parseFootballData(List<Map<String, String>> rows) {
+    private static List<Football> parseFootballData(List<Map<String, String>> rows) throws IllegalArgumentException {
         List<Football> data = new ArrayList<>();
         for (Map<String, String> row : rows) {
+            if (!row.containsKey("Team") || !row.containsKey("Goals") || !row.containsKey("Goals Allowed")) {
+                throw new IllegalArgumentException("CSV row is missing required keys: " + row.keySet());
+            }
             data.add(new Football(row.get("Team"), Integer.parseInt(row.get("Goals")), Integer.parseInt(row.get("Goals Allowed"))));
         }
         return data;
